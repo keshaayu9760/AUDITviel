@@ -1,0 +1,190 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #f7f5f2;
+  --bg-soft: #f1ede7;
+  --surface: #fffdf9;
+  --surface-2: #f8f4ee;
+  --ink: #1f2a37;
+  --ink-soft: #5f6b7a;
+  --line: #ded8cf;
+  --accent: #b06a3d;
+  --accent-soft: #d89c75;
+  --success: #2f7a62;
+  --radius: 14px;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: var(--line);
+  }
+
+  html {
+    @apply scroll-smooth;
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 20% -10%, #f6e7d8 0%, transparent 42%),
+      radial-gradient(circle at 85% 10%, #ecf0e7 0%, transparent 40%),
+      linear-gradient(180deg, #faf8f4 0%, #f6f2eb 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: -0.02em;
+    color: #1c2733;
+  }
+
+  p,
+  span,
+  li,
+  label,
+  input,
+  textarea,
+  select,
+  button {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass {
+    background: rgba(255, 253, 249, 0.84);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(182, 168, 149, 0.42);
+  }
+
+  .gradient-text {
+    background: linear-gradient(140deg, #8a4f2a 0%, #b06a3d 45%, #cc8d62 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+select,
+input,
+textarea {
+  background-color: #fffdf9;
+  color: #1f2a37;
+  border: 1px solid #d9d2c7;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #c28761 !important;
+  box-shadow: 0 0 0 3px rgba(194, 135, 97, 0.15);
+}
+
+select option {
+  color: #1f2a37;
+  background-color: #fffdf9;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0ebe2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5b7a3;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b09f88;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: drift 8s ease-in-out infinite;
+}
+
+/* Legacy utility remap for existing route components */
+[class~='text-white'] { color: #1f2a37 !important; }
+[class*='text-white/80'] { color: #2f3d4f !important; }
+[class*='text-white/70'] { color: #3b4a5c !important; }
+[class*='text-white/60'] { color: #4d5b6b !important; }
+[class*='text-white/50'] { color: #5f6b7a !important; }
+[class*='text-white/40'] { color: #6f7b88 !important; }
+[class*='text-white/35'],
+[class*='text-white/30'] { color: #7d8793 !important; }
+[class*='text-white/25'],
+[class*='text-white/20'],
+[class*='text-white/15'] { color: #9aa2ac !important; }
+
+[class*='text-brand-'],
+[class*='text-brand'] { color: #a8653f !important; }
+
+[class~='bg-black'],
+[class*='bg-black/'],
+[class*='bg-slate-900'] {
+  background-color: #fffdf9 !important;
+}
+
+[class*='bg-white/'] {
+  background-color: #fcf8f2 !important;
+}
+
+[class*='border-white/'],
+[class~='border-white'] {
+  border-color: #ddd2c3 !important;
+}
+
+.text-on-dark {
+  color: #ffffff !important;
+}

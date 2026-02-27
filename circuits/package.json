@@ -1,0 +1,20 @@
+{
+  "name": "auditviel-circuits",
+  "version": "1.0.0",
+  "description": "Zero-knowledge circuits for audit verification",
+  "scripts": {
+    "compile": "if not exist build mkdir build && npx circom2 audit_verification.circom --r1cs --wasm --sym --c -o build",
+    "setup": "node scripts/setup-ceremony.js",
+    "test": "node scripts/test-circuit.js"
+  },
+  "dependencies": {
+    "circomlib": "^2.0.5",
+    "ffjavascript": "^0.3.0",
+    "snarkjs": "^0.7.3"
+  },
+  "devDependencies": {
+    "circom_tester": "^0.0.19",
+    "circom2": "^0.2.22"
+  }
+}
+

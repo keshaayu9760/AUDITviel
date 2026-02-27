@@ -1,0 +1,39 @@
+{
+  "name": "auditviel",
+  "version": "1.0.0",
+  "description": "Verifiable Smart Contract Audit Credential Platform",
+  "main": "index.js",
+  "scripts": {
+    "deploy:polygon": "npx hardhat run scripts/polygon-deploy.js --network amoy && node scripts/sync-env-from-deployment.js deployment-info-polygon.json",
+    "deploy:zk": "npx hardhat run scripts/deploy-zk-upgraded.js --network amoy && node scripts/sync-env-from-deployment.js deployment-zk-upgraded.json",
+    "verify:polygon": "npx hardhat verify --network amoy",
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "test:integration": "node tests/post-deploy-integration.js",
+    "test:e2e": "node tests/post-deploy-integration.js",
+    "approve:auditor": "node scripts/approve-auditor.js",
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "compile:circuits": "cd circuits && npm run compile",
+    "setup:circuits": "cd circuits && npm run setup",
+    "test:circuits": "cd circuits && npm test",
+    "setup:zk": "npm run compile:circuits && npm run setup:circuits",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "backend:dev": "cd backend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ../circuits && npm install"
+  },
+  "keywords": ["blockchain", "zk", "verification", "audit", "credentials"],
+  "author": "AuditViel Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongoose": "^9.0.0",
+    "axios": "^1.6.0",
+    "ethers": "^6.8.0"
+  }
+}

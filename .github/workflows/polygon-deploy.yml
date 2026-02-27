@@ -1,0 +1,24 @@
+name: Deploy to Polygon Amoy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Deploy Contracts
+        env:
+          DEPLOYER_PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+          RPC_URL: ${{ secrets.RPC_URL }}
+        run: npm run deploy:polygon
+      - name: Run post-deploy tests
+        run: bash tests/post-deploy-checks.sh
+
+
+
