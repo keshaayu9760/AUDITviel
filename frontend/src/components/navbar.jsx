@@ -1,4 +1,5 @@
 ﻿import Link from 'next/link'
+import ConnectButton from '@/components/connect-button'
 
 export function Navbar() {
   return (
@@ -12,9 +13,9 @@ export function Navbar() {
           <Link href="/verify">Verify</Link>
           <Link href="/metrics">Metrics</Link>
           <Link href="/admin">Admin</Link>
+          <ConnectButton />
         </nav>
       </div>
     </header>
   )
 }
-
