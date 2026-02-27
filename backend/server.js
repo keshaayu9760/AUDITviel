@@ -66,14 +66,17 @@ app.use(
         "http://localhost:3001",
         "https://auditviel-g5qb.vercel.app",
         "https://auditviel.vercel.app",
-        "https://auditviel.vercel.app",
         "https://auditviel-git-main.vercel.app",
+        "https://audi-tviel.vercel.app",
         process.env.FRONTEND_URL,
         process.env.NEXT_PUBLIC_WEBSITE_URL,
       ].filter(Boolean);
 
-      // Allow project-specific Vercel deployments only
-      if (/^https:\/\/auditviel(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin)) {
+      // Allow project-specific Vercel deployments for both naming variants.
+      if (
+        /^https:\/\/auditviel(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin) ||
+        /^https:\/\/audi-tviel(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin)
+      ) {
         return callback(null, true);
       }
 
