@@ -149,12 +149,6 @@ ADMIN_JWT_SECRET=your_long_random_secret_min_32_chars
 ADMIN_JWT_TTL=30m
 ```
 
-## Security Notes
-
-- Do not commit real `.env` files.
-- Rotate any wallet/private key that was ever exposed.
-- Keep `ADMIN_JWT_SECRET` backend-only (Render), never in frontend.
-
 ## License
 
 MIT
