@@ -1,30 +1,32 @@
-# AuditViel
+﻿# AuditViel
 
-AuditViel is a full-stack audit verification platform:
-- Auditors issue signed audit credentials
-- Projects generate ZK proofs
-- Verification status is recorded on-chain
-- Users can verify project status from the UI
+AuditViel is a verifiable smart-contract audit credential platform. It lets auditors issue credentials, projects generate ZK-linked proofs, and users verify status on Polygon without exposing private audit report details.
 
 ## Repository Structure
 
-- `backend/` Express API, MongoDB integration, on-chain submit/verify routes
-- `frontend/` Next.js app (auditor, project, admin, verify, metrics)
+- `frontend/` Next.js app (auditor, project, verify, admin, metrics)
+- `backend/` Express API + MongoDB + on-chain verification routes
 - `contracts/` Solidity contracts
-- `circuits/` Circom/snarkjs proving system
-- `scripts/` deployment and utility scripts
-- `tests/` Hardhat and integration tests
+- `circuits/` Circom circuits and setup scripts
 
 ## Tech Stack
 
+- Frontend: Next.js 15, React, wagmi, ethers, Tailwind
 - Backend: Node.js, Express, ethers, mongoose
-- Frontend: Next.js, React, wagmi, ethers, recharts
-- Smart Contracts: Solidity + Hardhat
-- ZK: Circom + snarkjs (Groth16)
+- Smart Contracts: Solidity, Hardhat
+- ZK: Circom, snarkjs (Groth16)
 
-## Local Development
+## Prerequisites
 
-### 1. Install dependencies
+- Node.js 18+
+- npm 9+
+- MongoDB Atlas URI
+- Polygon Amoy RPC endpoint
+- Wallet private keys for deployer/admin/proof signer
+
+## Local Setup
+
+### 1) Install dependencies
 
 ```bash
 npm install
@@ -33,76 +35,125 @@ cd ../frontend && npm install
 cd ../circuits && npm install
 ```
 
-### 2. Configure environment variables
+### 2) Configure environment variables
 
-- Backend template: `backend/.env.example`
-- Frontend template: `frontend/.env.example`
+Create these files from examples:
 
-Create:
-- `backend/.env`
-- `frontend/.env`
+- `backend/.env` from `backend/.env.example`
+- `frontend/.env` from `frontend/.env.example`
 
-Do not commit real secrets.
+### 3) Start backend
 
-### 3. Start services
-
-Backend:
 ```bash
 cd backend
 npm run dev
 ```
 
-Frontend:
+Backend default URL: `http://localhost:10000`
+
+### 4) Start frontend
+
 ```bash
 cd frontend
 npm run dev
 ```
 
+Frontend default URL: `http://localhost:3000`
+
 ## Build and Validation
 
-Backend tests:
-```bash
-cd backend
-npm test
-```
+### Frontend production build
 
-Frontend production build:
 ```bash
 cd frontend
 npm run build
 ```
 
-Contracts compile:
+### Backend tests
+
 ```bash
+cd backend
+npm test
+```
+
+### Contracts compile
+
+```bash
+npx hardhat compile
+```
+
+### Circuits compile/setup
+
+```bash
+cd circuits
 npm run compile
+npm run setup
 ```
 
 ## Deployment
 
-### Frontend (Vercel)
+### Frontend on Vercel
 
-- Deploy the `frontend/` directory
-- Build command: `npm run build`
-- Output: Next.js default (`.next`)
-- Configure required `NEXT_PUBLIC_*` env vars in Vercel project settings
+Project settings:
 
-`frontend/vercel.json` is already included.
+- Root Directory: `frontend`
+- Install Command: `npm install`
+- Build Command: `npm run build`
 
-### Backend (Render)
+Required Vercel env vars:
 
-- Deploy the `backend/` directory as a Web Service
-- Build command: `npm install`
-- Start command: `npm start`
-- Set all required backend env vars in Render dashboard
+```env
+NEXT_PUBLIC_BACKEND_URL=https://your-render-service.onrender.com
+NEXT_PUBLIC_CHAIN_ID=80002
+NEXT_PUBLIC_RPC_URL=https://rpc-amoy.polygon.technology
+NEXT_PUBLIC_EXPLORER_URL=https://amoy.polygonscan.com
+NEXT_PUBLIC_AUDITOR_REGISTRY_ADDRESS=0x...
+NEXT_PUBLIC_PROOF_VERIFIER_ADDRESS=0x...
+NEXT_PUBLIC_ZK_VERIFIER_ADDRESS=0x...
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x...
+```
 
-`backend/render.yaml` is included.
+### Backend on Render
 
-## Security and Secret Hygiene
+Service settings:
 
-- `.env` files are gitignored
-- Only `.env.example` templates are tracked
-- Generated artifacts and reports are excluded from commits
-- Never commit private keys, JWT secrets, or database credentials
+- Root Directory: `backend`
+- Build Command: `npm ci`
+- Start Command: `npm start`
+
+Required Render env vars:
+
+```env
+NODE_ENV=production
+PORT=10000
+FRONTEND_URL=https://your-vercel-domain.vercel.app
+NEXT_PUBLIC_WEBSITE_URL=https://your-vercel-domain.vercel.app
+
+CHAIN_ID=80002
+RPC_URL=https://rpc-amoy.polygon.technology
+
+DEPLOYER_PRIVATE_KEY=0x...
+ADMIN_PRIVATE_KEY=0x...
+ADMIN_ADDRESS=0x...
+PROOF_SIGNER_PRIVATE_KEY=0x...
+TRUSTED_PROVER_PRIVATE_KEY=0x...
+TRUSTED_PROVER_ADDRESS=0x...
+
+AUDITOR_REGISTRY_ADDRESS=0x...
+PROOF_VERIFIER_ADDRESS=0x...
+ZK_VERIFIER_ADDRESS=0x...
+CONTRACT_ADDRESS=0x...
+
+MONGO_URI=mongodb+srv://...
+ADMIN_JWT_SECRET=your_long_random_secret_min_32_chars
+ADMIN_JWT_TTL=30m
+```
+
+## Security Notes
+
+- Do not commit real `.env` files.
+- Rotate any wallet/private key that was ever exposed.
+- Keep `ADMIN_JWT_SECRET` backend-only (Render), never in frontend.
 
 ## License
 
